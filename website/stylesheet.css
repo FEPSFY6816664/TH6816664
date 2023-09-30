@@ -50,12 +50,13 @@ header {
     background-color: #25384ae5;
 }
 
-.text {
+.text {    
+    position: relative;
     text-align: left;
     color: #25384a00;
-    font-size: 300%;
+    font-size: min(3vw, 3vh);
+
     width: 80%;
-    position: absolute;
     overflow: hidden;
     top: 50%;
     left: 50%;
@@ -78,19 +79,38 @@ header {
 
 
 
+
+
 article{
+    display: flex;
+    position: relative;
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    justify-content: center;
+}
+
+article .container{
+    position: relative;
+    margin: auto;
+    background-color: white;
     height: 800px;
+    width: 80%;
+    max-width: 1000px;
+    min-width: 800px;
+    border: 2px solid #25384a;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
 }
 
 
 
-
-
-
-
-
-footer{
+footer {
     position: relative;
+    background-color: lightgray;
     padding: 10px;
-    width: 100%;
+    border-top: 2px solid #25384a;
+
+    height: 200px;
 }
