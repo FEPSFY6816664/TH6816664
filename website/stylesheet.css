@@ -1,10 +1,34 @@
+
+
+
 * {
     font-family: monospace;
 }
 
+
 body{
     background-color: white;
+    margin: 0;
 }
+
+.background-sim{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+
+}
+
+
+canvas{
+    height: 100%;
+    width: 100%;
+    background-color: white ;
+}
+
+
 
 
 header {
@@ -32,6 +56,7 @@ header {
 }
 
 .overlay {
+
     position: absolute;
     bottom: 100%;
     left: 0;
@@ -86,7 +111,8 @@ article{
     position: relative;
     width: 100%;
     margin: auto;
-    padding: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     justify-content: center;
 }
 
@@ -111,6 +137,5 @@ footer {
     background-color: lightgray;
     padding: 10px;
     border-top: 2px solid #25384a;
-
     height: 200px;
 }
