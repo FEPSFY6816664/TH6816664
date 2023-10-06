@@ -64,10 +64,12 @@ class boid():
 
 
         self.steer = vec(0, 0)
-        if self.localBoids != []:
-            self.steer += self.ali()*ALI
-            self.steer += self.sep()*SEP
-            self.steer += self.coh()*COH
+        try:
+            if self.localBoids != []:
+                self.steer += self.ali()*ALI
+                self.steer += self.sep()*SEP
+                self.steer += self.coh()*COH
+        except: pass
 
         self.steer /= 3
 
@@ -117,11 +119,23 @@ class boid():
 
 
     def coh(self):
-        centerOfMass = vec(0, 0)
+
+        ### 1/self.localBoids.__len__() * sum([b.pos-self.pos for b in self.localBoids])
+
+
+        # centerOfMass = vec(0, 0)
+        # for b in self.localBoids:
+        #     centerOfMass += b.pos
+        # centerOfMass /= len(self.localBoids)
+        # return centerOfMass-self.pos
+
+        inverse = 1/len(self.localBoids)
+        summation = vec(0, 0)
+
         for b in self.localBoids:
-            centerOfMass += b.pos
-        centerOfMass /= len(self.localBoids)
-        return centerOfMass-self.pos
+            summation += b.pos-self.pos
+
+        return (inverse*summation).normalise()
 
 
     def sep(self):
