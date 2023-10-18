@@ -2,7 +2,7 @@
 
 
 * {
-    font-family: monospace;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 
@@ -31,7 +31,7 @@ canvas{
 
 header {
     position: relative;
-    background-color: lightgray;
+    background-color: #f1f1f1;
     padding: 10px;
     border-bottom: 2px solid #25384a;
 }
@@ -41,7 +41,7 @@ header {
     position: relative;
     width: 100%;
     max-width: 750px;
-    background-color: lightgray;
+    background-color: #f1f1f1;
 }
 
 
@@ -111,28 +111,63 @@ article{
     margin: auto;
     padding-top: 20px;
     padding-bottom: 20px;
-    justify-content: center;
 }
 
 article .container{
     position: relative;
     margin: auto;
     background-color: white;
-    height: 800px;
+    height: auto;
+    min-height: 800px;
     width: 80%;
     max-width: 1000px;
     min-width: 800px;
     border: 2px solid #25384a;
     border-radius: 5px;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
 }
+
+
+h2{
+    text-align: left;
+    margin-left: 50px;
+}
+
+
+
+blockquote{
+    border: 1px solid #25384a;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+    box-shadow: 6px 6px #25384a6f;
+    overflow: hidden;
+}
+
+
+blockquote p{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+blockquote footer{
+    height: auto;
+    width: auto;
+    border: none;
+    background-color: inherit;
+}
+
+blockquote a{
+    color: #2f2f2f;
+}
+
+
+
 
 
 
 footer {
     position: relative;
-    background-color: lightgray;
+    background-color: #f1f1f1;
     padding: 10px;
     border-top: 2px solid #25384a;
     height: 200px;

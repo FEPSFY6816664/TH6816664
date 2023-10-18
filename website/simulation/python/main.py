@@ -23,7 +23,7 @@ DIM = vec(500, 500)
 BGCOL = col(200, 200, 200)
 BOIDCOL = col(0, 0, 0)
 BLACK = col(0, 0, 0)
-FPS = 60
+FPS = 30
 
 
 class boid():
@@ -39,7 +39,7 @@ class boid():
 
         self.vel = vec(m.cos(self.angle), m.sin(self.angle))
         self.acc = vec(0, 0)
-        self.steer = vec(0, 0)
+        self.acc = vec(0, 0)
 
         self.viewRadius = 100
         self.FOV = m.radians(270)
@@ -63,20 +63,25 @@ class boid():
                 self.pos.y += DIM.y
 
 
-        self.steer = vec(0, 0)
+        self.acc = vec(0, 0)
         if self.localBoids != []:
-            self.steer += self.ali()*ALI
-            self.steer += self.sep()*SEP
-            self.steer += self.coh()*COH
+            self.acc += self.ali()*ALI
+            self.acc += self.sep()*SEP
+            self.acc += self.coh()*COH
 
-        self.steer /= 3
+        self.acc /= 3
 
-        self.acc = self.steer
+        # self.acc = self.acc
 
-        try:self.vel = self.acc
+        try:
+            self.vel = self.vel.normalize()
+            self.vel += self.acc
+            offs = (self.vel + (1/2)*self.acc).normalize()*self.maxSpeed
         except: pass
 
-        self.pos += (self.vel + (1/2)*self.acc).normalize()*self.maxSpeed
+
+
+        self.pos += offs
         self.acc = vec(0, 0)
         
         wrap()
@@ -87,16 +92,16 @@ class boid():
             
 
     def getLocalBoids(self):
-        self.localBoids = []
-        for boid in self.sim.boids:
-            if boid == self:
+        self.localBoids: list[boid] = []
+        for b in self.sim.boids:
+            if b == self:
                 continue
 
-            sumPos = boid.pos-self.pos
+            sumPos = b.pos-self.pos
             dist = m.sqrt(sumPos.x**2 + sumPos.y**2)
             isClose = dist < self.viewRadius
 
-            vecTo = boid.pos-self.pos
+            vecTo = b.pos-self.pos
             relativeAngle = m.atan2(vecTo.y, vecTo.x)-self.angle
             if relativeAngle > m.radians(180):
                 relativeAngle -= m.radians(360)
@@ -105,7 +110,7 @@ class boid():
             isWithin = abs(relativeAngle) < self.FOV/2
 
             if isClose and isWithin:
-                self.localBoids.append(boid)
+                self.localBoids.append(b)
 
 
 
@@ -121,7 +126,7 @@ class boid():
         for b in self.localBoids:
             centerOfMass += b.pos
         centerOfMass /= len(self.localBoids)
-        return centerOfMass-self.pos
+        return (centerOfMass-self.pos).normalize()
 
 
     def sep(self):
@@ -129,7 +134,7 @@ class boid():
         for b in self.localBoids:
             sumVecTo += b.pos-self.pos
         sumVecAway = sumVecTo*-1
-        return sumVecAway
+        return sumVecAway.normalize()
 
 
 
@@ -166,13 +171,15 @@ class Simulation():
             if HIGHLIGHT:
 
                 try:
+                    print(self.Target.pos, self.Target.vel, self.Target.acc)
+
                     pg.draw.arc(self.display, BLACK, rect(self.Target.pos.x-self.Target.viewRadius, self.Target.pos.y-self.Target.viewRadius, self.Target.viewRadius*2, self.Target.viewRadius*2), -self.Target.angle-self.Target.FOV/2, -self.Target.angle+self.Target.FOV/2, 1)
                     pg.draw.line(self.display, BLACK, self.Target.pos, self.Target.pos+vec(m.cos(self.Target.angle-self.Target.FOV/2), m.sin(self.Target.angle-self.Target.FOV/2)).normalize()*self.Target.viewRadius)
                     pg.draw.line(self.display, BLACK, self.Target.pos, self.Target.pos+vec(m.cos(self.Target.angle+self.Target.FOV/2), m.sin(self.Target.angle+self.Target.FOV/2)).normalize()*self.Target.viewRadius)
                     
 
                     pg.draw.line(self.display, BLACK, self.Target.pos, self.Target.pos+self.Target.vel*self.Target.viewRadius)
-                    pg.draw.line(self.display, BLACK, self.Target.pos, self.Target.pos+self.Target.steer.normalize()*self.Target.viewRadius)
+                    pg.draw.line(self.display, BLACK, self.Target.pos, self.Target.pos+self.Target.acc.normalize()*self.Target.viewRadius)
 
 
 
@@ -186,13 +193,11 @@ class Simulation():
 
                     pg.draw.line(self.display, col(255, 255, 255), self.Target.pos, self.Target.pos+self.Target.acc)
 
-                    pg.draw.circle(self.display, col(255, 255, 255), self.Target.pos+self.Target.steer/3, 5)
+                    pg.draw.circle(self.display, col(255, 255, 255), self.Target.pos+self.Target.acc/3, 5)
+
 
                 except:
                     pass
-
-                # for boid in self.Target.localBoids:
-                #     pg.draw.line(self.display, col(150, 150, 150), self.Target.pos, boid.pos)
             
 
             pg.display.update()
