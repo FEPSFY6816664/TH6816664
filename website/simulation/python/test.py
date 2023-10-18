@@ -18,6 +18,9 @@ BLACK = col(0, 0, 0)
 
 FPS = 30
 
+arr = [vec(r.randint(0, 10), r.randint(0, 10)) for i in range(10)]
+
+print(vec(2, 5)*2)
 
 class boid():
     def __init__(self, pos, simulation, angle = None) -> None:

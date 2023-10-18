@@ -63,11 +63,11 @@ class boid():
                 self.pos.y += DIM.y
 
 
-        self.acc = vec(0, 0)
+        self.steer = vec(0, 0)
         if self.localBoids != []:
-            self.acc += self.ali()*ALI
-            self.acc += self.sep()*SEP
-            self.acc += self.coh()*COH
+            self.steer += self.ali()*ALI
+            self.steer += self.sep()*SEP
+            self.steer += self.coh()*COH
 
         self.acc /= 3
 
@@ -122,11 +122,23 @@ class boid():
 
 
     def coh(self):
-        centerOfMass = vec(0, 0)
+
+        ### 1/self.localBoids.__len__() * sum([b.pos-self.pos for b in self.localBoids])
+
+
+        # centerOfMass = vec(0, 0)
+        # for b in self.localBoids:
+        #     centerOfMass += b.pos
+        # centerOfMass /= len(self.localBoids)
+        # return centerOfMass-self.pos
+
+        inverse = 1/len(self.localBoids)
+        summation = vec(0, 0)
+
         for b in self.localBoids:
             centerOfMass += b.pos
         centerOfMass /= len(self.localBoids)
-        return (centerOfMass-self.pos).normalize()
+        return centerOfMass-self.pos
 
 
     def sep(self):
