@@ -128,10 +128,53 @@ article .container{
 }
 
 
+h1{
+    font-size: 30px;
+    border-bottom: 1px solid #25384a;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+
 h2{
     text-align: left;
     margin-left: 50px;
+    margin-right: 50%;
+    border-bottom: 1px solid #25384a2f;
 }
+
+
+.upperContainer{
+    display: flex;
+    align-items: center;
+}
+
+.abstract{
+    width: 75%;
+}
+
+
+
+table{
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+
+table a{
+    text-decoration: none;
+}
+
+
+th{
+    border-bottom: 1px solid #25384a;
+}
+
+
+td{
+    border-bottom: 1px solid #25384a2f;
+}
+
 
 
 
@@ -170,5 +213,5 @@ footer {
     background-color: #f1f1f1;
     padding: 10px;
     border-top: 2px solid #25384a;
-    height: 200px;
+    height: 2000px;
 }
