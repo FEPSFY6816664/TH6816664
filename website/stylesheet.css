@@ -139,6 +139,8 @@ h1{
 h2{
     text-align: left;
     margin-left: 50px;
+    margin-right: 50%;
+    border-bottom: 1px solid #25384a2f;
 }
 
 
