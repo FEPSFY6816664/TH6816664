@@ -135,6 +135,16 @@ h2{
 
 
 
+
+table, th, td{
+    border: 1px solid #25384a;
+    margin: auto;
+}
+
+
+
+
+
 blockquote{
     border: 1px solid #25384a;
     border-radius: 10px;
